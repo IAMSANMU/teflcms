@@ -1,0 +1,184 @@
+<% var headContent = { %> <%
+include("/template/mtg/includes/header.html"){} %>
+
+
+
+	<script type="text/javascript"
+	src="${BASE_PATH }static/front/mtg/js/home.js"></script>
+<meta property="qc:admins" content="3746002437626416706375" />
+<meta name="baidu-site-verification" content="HoZ9m8VIaf" />
+<% }; %> <% var bodyContent = { %> <%
+include("/template/mtg/includes/header_menu.html"){} %>
+
+
+
+<div class="content">
+    
+<style type="text/css">
+    .over-body{
+        overflow:auto;
+    }
+</style>
+<div id="fsD1" class="focus" style="width:100%;">
+<div class="search-area">
+    <div class="m-search-wrap">
+        <div class="m-search-box" id="search-panel">
+            <div class="tab-content">
+<form id="fn-form" name="fn-form" action="/reservation/saveadd" method="post" class="form mainSearchForm mainSearchForm_homeindex" controller="reservation">                    <div class="control-group  city-group">
+                        <div class="m-search-tab">
+                            <span id="search-tabs" class="clearfix">在线免费预约</span>
+                            <span style="margin-left:105px;">获取最新优惠</span>
+                        </div>
+                        <span class="controls-span">您的姓名</span>
+                        <div class="controls">
+                            <label for="destInput">
+                                <input type="text" id="fn-name" class="ipt-text" data-destid="8" name="reservation.name" placeholder="请输入您的姓名" autocomplete="off">
+                                <input type="hidden" name="reservation.school.id" maxlength="32" value="775">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="control-group date-group">
+                        <span class="controls-span">联系手机</span>
+                        <div class="controls">
+                            <label for="startDate">
+                                <input class="ipt-text startDate date" id="fn-phone" type="text" name="reservation.phone" placeholder="请输入您的手机" autocomplete="off" spellcheck="false">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="control-group date-group">
+                        <span class="controls-span">附近校区</span>
+                        <div class="controls">
+                            <select name="reservation.district.id" class="select input-block" id="fn-district" style="width:184px;height:34px">
+                                <option value="">请选择预约的校区</option>
+                                    <option value="3680">庆春校区</option>
+                                    <option value="5734">城西校区</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group key-group">
+                        <span class="controls-span">预约课程</span>
+                        <div class="controls">
+                            <div class="con">
+                                <select name="reservation.course.id" class="select input-block" id="fn-course" style="width:184px;height:34px">
+                                    <option value="">请选择预约课程</option>
+                                    <option value="6594">Youngster少年英语课程</option>
+                                    <option value="6599">4-6岁Super幼儿英语课程</option>
+                                    <option value="6602">7-14岁少儿英语课程</option>
+                                    <option value="6607">新概念英语课程</option>
+                                    <option value="6608">少儿英语国际音标课程</option>
+                                    <option value="6610">少儿英语语音入门课程</option>
+                                    <option value="6612">全外教口语强化课程</option>
+                                    <option value="6616">初中英语同步课程</option>
+                                    <option value="6618">中考英语冲刺课程</option>
+                                    <option value="6621">中考英语专项课程</option>
+                                    <option value="6622">幼儿英语启蒙寒假课程</option>
+                                    <option value="6625">小升初英语专项提高课程</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <span class="controls-span">验证码</span>
+                        <div class="controls">
+                            <input name="verifyCode" class="ipt-text" maxlength="4" tabindex="1" type="text" style="width:80px" placeholder="验证码">
+                            <img src="/image-verify" id="fn-verify-image" style="width:90px;height:30px">
+                        </div>
+                    </div>
+
+                    <script type="text/javascript">
+                        $(function(){
+                            $("#fn-district").change(function(){
+                                if($(this).val()!=""){
+                                    var course = $("#fn-course").val();
+                                    webframe.post("/school/courses",{id:$(this).val()},function(data){
+                                        var option = "<option value=''>请选择预约课程</option>";
+                                        for(var i=0;i<data.result.length;i++){
+                                            if(course==data.result[i].id){
+                                                option=option+"<option value='"+data.result[i].id+"' selected>"+data.result[i].name+"</option>";
+                                            }else{
+                                                option=option+"<option value='"+data.result[i].id+"'>"+data.result[i].name+"</option>";
+                                            }
+                                        }
+                                        $("#fn-course").html(option);
+                                    });
+                                }
+                            });
+                            $("#fn-course").change(function(){
+                                if($(this).val()!=""){
+                                    var district = $("#fn-district").val();
+                                    webframe.post("/school/dists",{id:$(this).val()},function(data){
+                                        var option = "<option value=''>请选择预约的校区</option>";
+                                        for(var i=0;i<data.result.length;i++){
+                                            if(district==data.result[i].id){
+                                                option=option+"<option value='"+data.result[i].id+"' selected>"+data.result[i].name+"</option>";
+                                            }else{
+                                                option=option+"<option value='"+data.result[i].id+"'>"+data.result[i].name+"</option>";
+                                            }
+                                        }
+                                        $("#fn-district").html(option);
+                                    });
+                                }
+                            });
+                        });
+                    </script>
+                    <div class="control-group search-btn-group" id="submitBox">
+                        <input type="submit" value="预约" class="search-btn" id="searchHouse">
+                    </div>
+</form>
+            </div>
+            <div class="tab-content" style="display: none">
+                <form action="" method="GET" id="internationalSearchForm">
+                    <div class="control-group">
+                        <span class="controls-span"></span>
+                        <div class="controls"></div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls"></div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls"></div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls"></div>
+                    </div>
+
+                    <div class="control-group search-btn-group" id="submitBox">
+                        <input type="button" value="预约" class="search-btn" id="internationalSearchButton">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="D1pic1" class="fPic">
+        <div class="fcon" style="display: block;">
+            <a target="_blank" href="http://www.keedu.cn/course?schid=775"><img src="/static/818/pic/201507031721334439962.jpg" style="opacity: 1;"></a>
+        </div>
+    </div>
+    <div class="fbg" style="margin-left: -11px;">
+        <div class="D1fBt" id="D1fBt">
+                <a href="javascript:void(0)" hidefocus="true" target="_self" class=""><i>1</i></a>
+        </div>
+    </div>
+    <span class="prev"></span>
+    <span class="next"></span>
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<% }; %> <%
+layout("/pages/template/_layout.html",{head:headContent,body:bodyContent}){
+%> <%} %>
